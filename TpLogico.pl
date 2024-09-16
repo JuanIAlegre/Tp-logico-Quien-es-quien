@@ -11,10 +11,15 @@ persona(pepe, boca(chica)).
 persona(pepe, cara(puntuda)).
 persona(pepe, ojos(marrones)).
 persona(pepe, nariz(chica)).
+
 carta(rojo, samuel).
 carta(azul, pepe).
+
 contrincante(rojo, azul).
 contrincante(azul, rojo).
+
+pista(rojo, pelo(rubio,_)).
+pista(rojo, boca(chica)).
 
 esCalvo(Persona):-persona(Persona, calvo).
 esRubio(Persona):-persona(Persona, pelo(rubio,_)).
@@ -33,12 +38,16 @@ tieneOjosMarrones(Persona):-persona(Persona,ojos(marrones)).
 tieneOjosMarrones(Persona):-esCastanio(Persona).
 tieneOjosMarrones(Persona):-esMorocho(Persona).
 
-tieneCaraRedonda(Persona):- not(persona(Persona, cara(puntuda))).
+tieneCaraRedonda(Persona):-not(persona(Persona, cara(puntuda))).
 
 rubiosBocaChica(Personas):-findall(Persona, (esRubio(Persona), tieneBocaChica(Persona)), Personas).
 
-cumple_pistas(Persona, Pistas) :-
-    forall(member(Pista, Pistas), persona(Persona, Pista)).
+jugador(Jugador):-contrincante(Jugador,_).
+
+cumplePistas(Persona, Jugador):-
+    jugador(Jugador),
+    persona(Persona,_),
+    forall(persona(Persona, Caracteristica), pista(Jugador, Caracteristica)).
 
 ganando(Jugador, PistasJugador, PistasContrincante) :-
     contrincante(Jugador, Contrincante),
