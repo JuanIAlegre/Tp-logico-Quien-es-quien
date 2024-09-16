@@ -31,8 +31,8 @@ test("todos los que no rubios de boca chica",fail):-rubiosBocaChica([samuel]).
 :-end_tests(rubiosbocachica).
 
 :- begin_tests(pistas).
-test("persona cumple con las pistas", set(Persona = [samuel])):-cumplePistas(Persona, [pelo(blanco, lacio), boca(chica)]).
-test("persona no cumple con las pistas", fail):-cumplePistas(pepe, [pelo(blanco, lacio), boca(chica)]).
+test("persona cumple con las pistas", fail):-cumplePistas(samuel, rojo).
+test("persona no cumple con las pistas"):-not(cumplePistas(pepe,rojo)).
 :- end_tests(pistas).
 
 :- begin_tests(ganando).
