@@ -36,12 +36,6 @@ test("persona no cumple con las pistas"):-not(cumplePistas(pepe,rojo)).
 :- end_tests(pistas).
 
 :- begin_tests(ganando).
-test("jugador rojo está perdiendo", fail) :-
-    PistasRojo = [pelo(blanco, lacio), boca(chica)],
-    PistasAzul = [pelo(rubio, rulos), boca(chica)],
-    ganando(rojo, PistasRojo, PistasAzul).
-test("jugador azul está ganando") :-
-    PistasRojo = [pelo(blanco, lacio), boca(chica)],
-    PistasAzul = [pelo(rubio, rulos), boca(chica)],
-    ganando(azul, PistasAzul, PistasRojo).
+test("jugador le gana a contrincante", fail):-ganando(rojo, azul).
+test("no hay ningun ganador"):-not(ganando(rojo, azul)), not(ganando(azul, rojo)).
 :- end_tests(ganando).

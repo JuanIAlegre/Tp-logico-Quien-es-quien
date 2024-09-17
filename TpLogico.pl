@@ -49,12 +49,13 @@ cumplePistas(Persona, Jugador):-
     persona(Persona,_),
     forall(persona(Persona, Caracteristica), pista(Jugador, Caracteristica)).
 
-ganando(Jugador, PistasJugador, PistasContrincante) :-
-    contrincante(Jugador, Contrincante),
-    cantidad_que_cumple(Jugador, PistasJugador, CantidadJugador),
-    cantidad_que_cumple(Contrincante, PistasContrincante, CantidadContrincante),
-    CantidadJugador < CantidadContrincante.
+ganando(Jugador, Contrincante):-
+    cantidadPersonasEncontradas(Jugador, CantidadJugador),
+    cantidadPersonasEncontradas(Contrincante, CantidadContrincante),
+    CantidadJugador > CantidadContrincante.
 
-cantidad_que_cumple(Jugador, Pistas, Cantidad) :-
-    findall(Persona, cumple_pistas(Persona, Pistas), Personas),
+cantidadPersonasEncontradas(Jugador, Cantidad):-
+    jugador(Jugador),
+    persona(Persona,_),
+    findall(Persona, cumplePistas(Persona, Jugador), Personas),
     length(Personas, Cantidad).
