@@ -31,19 +31,11 @@ test("todos los que no rubios de boca chica",fail):-rubiosBocaChica([samuel]).
 :-end_tests(rubiosbocachica).
 
 :- begin_tests(pistas).
-test("persona cumple con las pistas", set(Persona = [samuel])) :-
-    cumple_pistas(Persona, [pelo(blanco, lacio), boca(chica)]).
-test("persona no cumple con las pistas", fail) :-
-    cumple_pistas(pepe, [pelo(blanco, lacio), boca(chica)]).
+test("persona cumple con las pistas", fail):-cumplePistas(samuel, rojo).
+test("persona no cumple con las pistas"):-not(cumplePistas(pepe,rojo)).
 :- end_tests(pistas).
 
 :- begin_tests(ganando).
-test("jugador rojo está perdiendo", fail) :-
-    PistasRojo = [pelo(blanco, lacio), boca(chica)],
-    PistasAzul = [pelo(rubio, rulos), boca(chica)],
-    ganando(rojo, PistasRojo, PistasAzul).
-test("jugador azul está ganando") :-
-    PistasRojo = [pelo(blanco, lacio), boca(chica)],
-    PistasAzul = [pelo(rubio, rulos), boca(chica)],
-    ganando(azul, PistasAzul, PistasRojo).
+test("jugador le gana a contrincante", fail):-ganando(rojo, azul).
+test("no hay ningun ganador"):-not(ganando(rojo, azul)), not(ganando(azul, rojo)).
 :- end_tests(ganando).

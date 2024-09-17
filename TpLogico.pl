@@ -11,10 +11,15 @@ persona(pepe, boca(chica)).
 persona(pepe, cara(puntuda)).
 persona(pepe, ojos(marrones)).
 persona(pepe, nariz(chica)).
+
 carta(rojo, samuel).
 carta(azul, pepe).
+
 contrincante(rojo, azul).
 contrincante(azul, rojo).
+
+pista(rojo, pelo(rubio,_)).
+pista(rojo, boca(chica)).
 
 esCalvo(Persona):-persona(Persona, calvo).
 esRubio(Persona):-persona(Persona, pelo(rubio,_)).
@@ -33,19 +38,24 @@ tieneOjosMarrones(Persona):-persona(Persona,ojos(marrones)).
 tieneOjosMarrones(Persona):-esCastanio(Persona).
 tieneOjosMarrones(Persona):-esMorocho(Persona).
 
-tieneCaraRedonda(Persona):- not(persona(Persona, cara(puntuda))).
+tieneCaraRedonda(Persona):-not(persona(Persona, cara(puntuda))).
 
 rubiosBocaChica(Personas):-findall(Persona, (esRubio(Persona), tieneBocaChica(Persona)), Personas).
 
-cumple_pistas(Persona, Pistas) :-
-    forall(member(Pista, Pistas), persona(Persona, Pista)).
+jugador(Jugador):-contrincante(Jugador,_).
 
-ganando(Jugador, PistasJugador, PistasContrincante) :-
-    contrincante(Jugador, Contrincante),
-    cantidad_que_cumple(Jugador, PistasJugador, CantidadJugador),
-    cantidad_que_cumple(Contrincante, PistasContrincante, CantidadContrincante),
-    CantidadJugador < CantidadContrincante.
+cumplePistas(Persona, Jugador):-
+    jugador(Jugador),
+    persona(Persona,_),
+    forall(persona(Persona, Caracteristica), pista(Jugador, Caracteristica)).
 
-cantidad_que_cumple(Jugador, Pistas, Cantidad) :-
-    findall(Persona, cumple_pistas(Persona, Pistas), Personas),
+ganando(Jugador, Contrincante):-
+    cantidadPersonasEncontradas(Jugador, CantidadJugador),
+    cantidadPersonasEncontradas(Contrincante, CantidadContrincante),
+    CantidadJugador > CantidadContrincante.
+
+cantidadPersonasEncontradas(Jugador, Cantidad):-
+    jugador(Jugador),
+    persona(Persona,_),
+    findall(Persona, cumplePistas(Persona, Jugador), Personas),
     length(Personas, Cantidad).
