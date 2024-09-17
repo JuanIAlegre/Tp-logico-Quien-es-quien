@@ -36,6 +36,6 @@ test("persona no cumple con las pistas"):-not(cumplePistas(pepe,rojo)).
 :- end_tests(pistas).
 
 :- begin_tests(ganando).
-test("jugador le gana a contrincante", fail):-ganando(rojo, azul).
-test("no hay ningun ganador"):-not(ganando(rojo, azul)), not(ganando(azul, rojo)).
+test("jugador le gana a contrincante", fail):-ganando(rojo).
+test("no hay ningun ganador"):-not(ganando(rojo)), not(ganando(azul)).
 :- end_tests(ganando).

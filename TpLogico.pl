@@ -49,13 +49,13 @@ cumplePistas(Persona, Jugador):-
     persona(Persona,_),
     forall(persona(Persona, Caracteristica), pista(Jugador, Caracteristica)).
 
-ganando(Jugador, Contrincante):-
+ganando(Jugador):-
+    contrincante(Jugador, Contrincante),
     cantidadPersonasEncontradas(Jugador, CantidadJugador),
     cantidadPersonasEncontradas(Contrincante, CantidadContrincante),
     CantidadJugador > CantidadContrincante.
 
 cantidadPersonasEncontradas(Jugador, Cantidad):-
     jugador(Jugador),
-    persona(Persona,_),
-    findall(Persona, cumplePistas(Persona, Jugador), Personas),
+    findall(Persona, (persona(Persona,_), cumplePistas(Persona, Jugador)), Personas),
     length(Personas, Cantidad).
